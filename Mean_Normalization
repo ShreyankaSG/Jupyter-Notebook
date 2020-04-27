@@ -1,0 +1,84 @@
+# To Do:
+#You will start by importing NumPy and creating a rank 2 ndarray of random integers between 0 
+#and 5,000 (inclusive) with 1000 rows and 20 columns.This array will simulate a dataset with a wide range
+#of values. Fill in the code below
+
+# import NumPy into Python
+import numpy as np
+
+#Create a 1000 x 20 ndarray with random integers in the half-open interval [0, 5001)
+#print the shape of X
+
+X=np.random.randint(0,5001,(1000,20))
+X.shape
+print(X)
+
+#Now that you created the array we will mean normalize it. We will perform mean normalization using the following equation:
+#$i= ((i- mu_i)/(sigma_i))$
+#where $\mbox{Col}_i$ is the $i$th column of $X$, $\mu_i$ is average of the values in the $i$th column of $X$, and $\sigma_i$ is the standard deviation of the values in the $i$th column of $X$. In other words, mean normalization is performed by subtracting from each column of $X$ the average of its values, and then by dividing by the standard deviation of its values. In the space below, you will first calculate the average and standard deviation of each column of $X$.
+#Average of the values in each column of X
+
+y=X.mean(axis=0)
+print("avg of columns=",y)
+
+# Print the shape of ave_cols ,should be (20,)
+y.shape
+
+# Standard Deviation of the values in each column of X
+z=X.std(axis=0)
+print("std deviation=",z)
+
+# Print the shape of std_cols, should be (20,)
+z.shape
+
+#to obtain the first column(0th zolumn)
+
+w=X[0:1000,0:1]
+print(w)
+
+#You can now take advantage of Broadcasting to calculate the mean normalized
+#version of $X$ in just one line of code using the equation above.
+#Use the code below
+
+X_norm=((w-y)/z)
+print(X_norm)
+
+#if the normalization is done correctly , 
+#the avergave should be close to 0 and
+#evenly distributed around zero within a small interval.
+print("average of all values=",X_norm.mean())
+
+# within the small interval around 0
+print("minimun value=",X_norm.min())
+
+# within the small interval around 0
+print("maximum value=",X_norm.max())
+
+# to verify
+X_norm.shape
+
+# Data separation :
+# We create a random permutation of X_norm elements
+row_indices=np.random.permutation(X_norm)
+print(row_indices)
+
+#60% for training set
+#20% for cross validation set
+#20% for test set
+
+np.random.shuffle(X_norm)
+
+# Create a Training Set
+X_train=X_norm[:int(1000*0.6)]
+# Create a Cross Validation Set
+X_crossVal=X_norm[int(1000*0.6):int(1000*0.8)]
+# Create a Test Set
+X_test=X_norm[int(1000*0.8):]
+# Print the shape of X_train
+X_train.shape
+
+# Print the shape of X_crossVal
+X_crossVal.shape
+
+# Print the shape of X_test
+X_test.shape
